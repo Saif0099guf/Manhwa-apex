@@ -1,0 +1,29 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0; padding: 8px;
+  background: var(--bg);
+  color: var(--text);
+}
+img {
+  display: block;
+  width: 100%;
+  margin: 8px 0;
+}
+a {
+  color: #0099ff;
+  text-decoration: none;
+}
+input {
+  width: 100%;
+  padding: 8px;
+  margin: 10px 0;
+  font-size: 16px;
+}
+:root {
+  --bg: #ffffff;
+  --text: #000000;
+}
+.dark {
+  --bg: #111;
+  --text: #eee;
+}
