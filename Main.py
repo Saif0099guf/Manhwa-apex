@@ -1,34 +1,35 @@
+import os
 import asyncio
+from telegram.ext import Application, CommandHandler
 from fastapi import FastAPI
 import uvicorn
-from telegram.ext import Application, CommandHandler
-import os
-
-app = FastAPI()
-
-@app.get("/")
-async def root():
-    return {"status": "✅ Apex Manhwa Bot is alive!"}
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 BOT_USERNAME = os.getenv("BOT_USERNAME")
 
-async def start(update, context):
+app = FastAPI()
+
+@app.get("/")
+def home():
+    return {"status": "✅ Apex Manhwa Bot is alive!"}
+
+async def start_command(update, context):
     await update.message.reply_text(
-        f"👋 Welcome to {BOT_USERNAME}!\nSend /settings to customize your downloads."
+        f"👋 Welcome to {BOT_USERNAME}!\nUse /settings to customize your downloads."
     )
 
-async def settings(update, context):
-    await update.message.reply_text("⚙️ Settings panel coming soon...")
+async def settings_command(update, context):
+    await update.message.reply_text("⚙️ Settings panel will appear here soon.")
 
 async def run_bot():
-    app_ = Application.builder().token(BOT_TOKEN).build()
-    app_.add_handler(CommandHandler("start", start))
-    app_.add_handler(CommandHandler("settings", settings))
-    await app_.initialize()
-    await app_.start()
-    await app_.updater.start_polling()
-    await app_.idle()
+    print("✅ Starting Apex Bot polling...")
+    application = Application.builder().token(BOT_TOKEN).build()
+    application.add_handler(CommandHandler("start", start_command))
+    application.add_handler(CommandHandler("settings", settings_command))
+    await application.initialize()
+    await application.start()
+    await application.updater.start_polling()
+    await application.idle()
 
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
